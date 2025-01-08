@@ -50,3 +50,9 @@ Once we are inside the Shell, we will run our code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 PS C:\WINDOWS\system32> & D:\salvatutiempo\stt_winprofile_manager.ps1"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+UPDATED:
+- Now the Script is also able to show profile path size per user. In order to enable the new column it is needed to run the script with the following paramater:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+PS C:\WINDOWS\system32> & D:\salvatutiempo\stt_winprofile_manager.ps1 with-size"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
