@@ -3,9 +3,15 @@ Name: STT User Profile Manager - by SalvaTuTiempo
 Date: 2022-01-17
 Author: Miguel Mora <info@salvatutiempo.com>
 Description: Windows Profiles Manager - to show and remove profiles
-Version: 1.0
+Version: 1.1
+History:
+    1.1 Size added
+    1.0 First release
 Notes:
 	- Need to be run as Administrator
+
+    - Run with size column included: : stt_winprofile_manager.ps1 with-size
+    - Run without size column: : stt_winprofile_manager.ps1
 #>
 
 #########################################################################
@@ -64,8 +70,16 @@ function RemoveUsers {
 do
  {
     $accounts = Get-WmiObject -Class Win32_UserProfile | Where-Object {$_.Special -ne 'Special'}
+    
     $selection = ShowMenu | Out-GridView -PassThru  -Title 'STT User Profile Manager - [by SalvaTuTiempo]'
-    $allusers = $accounts | Select-Object @{Name='UserName';Expression={Split-Path $_.LocalPath -Leaf}}, LocalPath, Loaded, SID, @{Name='LastUsed';Expression={$_.ConvertToDateTime($_.LastUseTime)}} 
+    if ($args[0] -eq "with-size")
+    {    
+        $allusers = $accounts | Select-Object @{Name='UserName';Expression={Split-Path $_.LocalPath -Leaf}}, LocalPath, @{Name='Size (MB)';Expression={ [math]::round((Get-ChildItem $_.LocalPath -Recurse -File | Measure-Object -Property Length -Sum).Sum / 1MB, 2) }}, Loaded, SID, @{Name='LastUsed';Expression={$_.ConvertToDateTime($_.LastUseTime)}} 
+    }
+    else
+    {
+        $allusers = $accounts | Select-Object @{Name='UserName';Expression={Split-Path $_.LocalPath -Leaf}}, LocalPath, Loaded, SID, @{Name='LastUsed';Expression={$_.ConvertToDateTime($_.LastUseTime)}} 
+    }
     switch ($selection)
     {
         {$Selection.Name -eq 1} 
